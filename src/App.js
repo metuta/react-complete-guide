@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 // import styled from 'styled-components';
 // import Validation from './Validation/Validation';
 // import Char from './Char/Char';
@@ -15,7 +14,7 @@ import classes from './App.css';
 //   border: 1px solid blue;
 //   padding: 8px;
 //   cursor: pointer;
-
+  
 //   &:hover {
 //     background-color: ${props => props.show ? 'salmon' : 'lightgreen'};
 //     color: black;
@@ -72,7 +71,7 @@ class App extends Component {
   }
 
   render() {
-
+    
     // let chars = (
     //   <div>
     //     {
@@ -92,13 +91,12 @@ class App extends Component {
         <div>
           {
             this.state.persons.map((person, index) => {
-              return <ErrorBoundary key={person.id}>
-                <Person
-                  clicked={() => this.deletePersonHandler(index)}
-                  name={person.name}
-                  age={person.age}
-                  changed={(event) => this.nameChangedHandler(event, person.id)} />
-              </ErrorBoundary>
+              return <Person
+                key={person.id}
+                clicked={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                changed={(event) => this.nameChangedHandler(event, person.id)} />
             })
           }
         </div>
