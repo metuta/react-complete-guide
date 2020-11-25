@@ -29,6 +29,16 @@ class App extends Component {
     console.log('[App.js] componentDidMount');
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate', nextProps, nextState);
+
+    return true;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('[App.js] componentDidUpdate', prevProps, prevState, snapshot);
+  }
+
   togglePersonsHandler = () => {
     this.setState({ showPersons: !this.state.showPersons });
   }
