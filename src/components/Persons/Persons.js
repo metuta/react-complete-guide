@@ -11,7 +11,7 @@ class Persons extends PureComponent {
 
     /* PureComponent implements a shallow comparison on props and state (shouldComponentUpdate)
     and returns true if any props or states have changed. */
-    
+
     // shouldComponentUpdate(nextProps, nextState) {
     //     if (nextProps.persons !== this.props.persons) {
     //         console.log('[Persons.js] shouldComponentUpdate', nextProps, this.props, nextState);

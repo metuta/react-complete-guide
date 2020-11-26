@@ -5,7 +5,7 @@ import AuthContext from '../../context/auth-context';
 const cockpit = (props) => {
     const toggleBtnRef = useRef(null);
     const authContext = useContext(AuthContext);
-    
+
     useEffect(() => {
         console.log('[Cockpit.js] useEffect only mount - []');
         toggleBtnRef.current.click();

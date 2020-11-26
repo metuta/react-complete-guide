@@ -31,11 +31,11 @@ class Person extends Component {
                 {this.context.authenticated ? <p>Authenticated!</p> : <p>Please log in</p>}
                 <p onClick={this.props.clicked}> I'am {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
-                <input 
+                <input
                     // ref={(inputEl) => {this.inputElement = inputEl}}  // 1. way to create and set ref (not usable in functional components)
                     ref={this.inputElementRef}  // setting ref created with 2. way
-                    type="text" 
-                    onChange={this.props.changed} 
+                    type="text"
+                    onChange={this.props.changed}
                     value={this.props.name} />
             </React.Fragment>
         );
