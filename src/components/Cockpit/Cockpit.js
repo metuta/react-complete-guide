@@ -24,8 +24,8 @@ const cockpit = (props) => {
     }); // no array -> runs on every render
 
     useEffect(() => {
-        console.log('[Cockpit.js] useEffect only for props.persons - [props.persons]');
-    }, [props.persons]); // would reload only, when persons-property changes!
+        console.log('[Cockpit.js] useEffect only for props.personsLength - [props.personsLength]');
+    }, [props.personsLength]); // would reload only, when persons-property changes!
 
     useEffect(() => {
         console.log('[Cockpit.js] useEffect only for props.show - [props.show]');
@@ -34,10 +34,10 @@ const cockpit = (props) => {
     const assignedClasses = [];
     const btnClass = [classes.Button];
 
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         assignedClasses.push(classes.red);
     }
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         assignedClasses.push(classes.bold);
     }
 
@@ -56,4 +56,4 @@ const cockpit = (props) => {
     );
 };
 
-export default cockpit;
+export default React.memo(cockpit); // memo stores the props of functional components to avoid unnecessary updates
