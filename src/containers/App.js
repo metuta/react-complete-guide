@@ -3,6 +3,7 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Auxiliary from '../hoc/Auxiliary';
+import AuthContext from '../context/auth-context';
 import classes from './App.css';
 
 class App extends Component {
@@ -13,7 +14,7 @@ class App extends Component {
 
   state = {
     persons: [
-      { id: 'abc', name: 'Tugrul', age: '38' },
+      { id: 'abc', name: 'Tugrul', age: 38 },
       { id: 'def', name: 'Ali', age: 30 },
       { id: 'ghi', name: 'Veli', age: 23 }
     ],
@@ -21,6 +22,7 @@ class App extends Component {
     showPersons: false,
     showCockpit: true,
     changeCounter: 0,
+    authenticated: false,
     inputText: ''
   };
 
@@ -76,6 +78,16 @@ class App extends Component {
     this.setState({ inputText: chars.join('') });
   }
 
+  loginHandler = () => {
+    console.log('loginHandler');
+    this.setState({ authenticated: true });
+  }
+
+  logoutHandler = () => {
+    console.log('logoutHandler');
+    this.setState({ authenticated: false });
+  }
+
   render() {
     console.log('[App.js] render');
 
@@ -91,15 +103,22 @@ class App extends Component {
     return (
       <Auxiliary>
         <button onClick={() => this.setState({ showCockpit: !this.state.showCockpit })}>Remove Cockpit</button>
-        { this.state.showCockpit ?
-          <Cockpit
-            title={this.props.appTitle}
-            show={this.state.showPersons}
-            personsLength={this.state.persons.length}
-            clicked={this.togglePersonsHandler} />
-          : null
-        }
-        {persons}
+        <AuthContext.Provider 
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler ,
+            logout: this.logoutHandler 
+          }}>
+          {this.state.showCockpit ?
+            <Cockpit
+              title={this.props.appTitle}
+              show={this.state.showPersons}
+              personsLength={this.state.persons.length}
+              clicked={this.togglePersonsHandler} />
+            : null
+          }
+          {persons}
+        </AuthContext.Provider>
       </Auxiliary>
     );
   }
