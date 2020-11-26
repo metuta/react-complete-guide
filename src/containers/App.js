@@ -20,6 +20,7 @@ class App extends Component {
     username: 'myUser1',
     showPersons: false,
     showCockpit: true,
+    changeCounter: 0,
     inputText: ''
   };
 
@@ -59,7 +60,13 @@ class App extends Component {
     person.name = event.target.value;
     const persons = [...this.state.persons];
     persons[personIndex] = person;
-    this.setState({ persons });
+    // this.setState({ persons });        // correct way, if new state is NOT based on old state 
+    this.setState((prevState, props) => { // correct way, if new state is based on old state
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      };
+    });
   }
 
   deleteCharHandler = (index) => {
