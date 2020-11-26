@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 
-class Persons extends Component {
+class Persons extends PureComponent {
 
     // static getDerivedStateFromProps(props, state) {
     //     console.log('[Persons.js] getDerivedStateFromProps', props, state);
@@ -9,14 +9,17 @@ class Persons extends Component {
     //     return state;
     // }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.persons !== this.props.persons) {
-            console.log('[Persons.js] shouldComponentUpdate', nextProps, this.props, nextState);
-            return true;
-        } else {
-            return false;
-        }
-    }
+    /* PureComponent implements a shallow comparison on props and state (shouldComponentUpdate)
+    and returns true if any props or states have changed. */
+    
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if (nextProps.persons !== this.props.persons) {
+    //         console.log('[Persons.js] shouldComponentUpdate', nextProps, this.props, nextState);
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
         console.log('[Persons.js] getSnapshotBeforeUpdate', prevProps, prevState);
