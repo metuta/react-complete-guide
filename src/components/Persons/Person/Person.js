@@ -5,6 +5,15 @@ import withClass from '../../../hoc/withClass';
 import classes from './Person.css';
 
 class Person extends Component {
+    constructor(props) {
+        super(props);
+        this.inputElementRef = React.createRef(); // 2. way to create ref (more modern and usable in functional components over react hooks too)
+    }
+
+    componentDidMount() {
+        // this.inputElement.focus(); // ref-element, created with 1. way
+        this.inputElementRef.current.focus();  // ref-element, created with 2. way
+    }
 
     render() {
         console.log('[Person.js] rendering...');
@@ -13,7 +22,12 @@ class Person extends Component {
             <React.Fragment>
                 <p onClick={this.props.clicked}> I'am {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
-                <input type="text" onChange={this.props.changed} value={this.props.name} />
+                <input 
+                    // ref={(inputEl) => {this.inputElement = inputEl}}  // 1. way to create and set ref (not usable in functional components)
+                    ref={this.inputElementRef}  // setting ref created with 2. way
+                    type="text" 
+                    onChange={this.props.changed} 
+                    value={this.props.name} />
             </React.Fragment>
         );
     }
