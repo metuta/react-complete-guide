@@ -11,9 +11,16 @@ class Person extends Component {
         this.inputElementRef = React.createRef(); // 2. way to create ref (more modern and usable in functional components over react hooks too)
     }
 
+    static contextType = AuthContext;   // works only in class-based components and should exactly be defined as here, so this.context can be used.
+
     componentDidMount() {
         // this.inputElement.focus(); // ref-element, created with 1. way
         this.inputElementRef.current.focus();  // ref-element, created with 2. way
+        console.log('[Person.js] componentDidMount', this.context.authenticated);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('[Person.js] componentDidUpdate', this.context.authenticated);
     }
 
     render() {
@@ -21,9 +28,7 @@ class Person extends Component {
 
         return (
             <React.Fragment>
-                <AuthContext.Consumer>
-                    {context => context.authenticated ? <p>Authenticated!</p> : <p>Please log in</p>}
-                </AuthContext.Consumer>
+                {this.context.authenticated ? <p>Authenticated!</p> : <p>Please log in</p>}
                 <p onClick={this.props.clicked}> I'am {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
                 <input 
