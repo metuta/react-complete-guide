@@ -6,7 +6,7 @@ const cockpit = (props) => {
         console.log('[Cockpit.js] useEffect only mount - []');
 
         const timer = setTimeout(() => {
-            alert('Saved data to cloud!');
+            console.log('[Cockpit.js] setTimeout() Saved data to cloud!');
         }, 1000);
 
         return () => {  // does cleanup work, only when component is destroyed (as in componentWillUnmount lifecycle hook of class-based components)
