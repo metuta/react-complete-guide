@@ -3,19 +3,32 @@ import classes from './Cockpit.css';
 
 const cockpit = (props) => {
     useEffect(() => {
-        console.log('[Cockpit.js] useEffect only mount');
+        console.log('[Cockpit.js] useEffect only mount - []');
 
-        // setTimeout(() => {
-        //     alert('Saved data to cloud!');
-        // }, 1000);
-    }, []); // empty array -> runs only first time on mount, because there is no dependency to reload
+        const timer = setTimeout(() => {
+            alert('Saved data to cloud!');
+        }, 1000);
+
+        return () => {  // does cleanup work, only when component is destroyed (as in componentWillUnmount lifecycle hook of class-based components)
+            clearTimeout(timer);
+            console.log('[Cockpit.js] cleanup work in useEffect on onUnmount - []');
+        }
+    }, []); // empty array -> runs once only first time on mount/unmount, because there is no dependency to reload
 
     useEffect(() => {
-        console.log('[Cockpit.js] useEffect only for props.persons');
+        console.log('[Cockpit.js] useEffect on every render - no array');
+
+        return () => {  // does cleanup work "before every render" of this component, because there is no array-argument
+            console.log('[Cockpit.js] cleanup work in useEffect before every render - no array');
+        }
+    }); // no array -> runs on every render
+
+    useEffect(() => {
+        console.log('[Cockpit.js] useEffect only for props.persons - [props.persons]');
     }, [props.persons]); // would reload only, when persons-property changes!
 
     useEffect(() => {
-        console.log('[Cockpit.js] useEffect only for props.show');
+        console.log('[Cockpit.js] useEffect only for props.show - [props.show]');
     }, [props.show]); // would reload only, when show-property changes!
 
     const assignedClasses = [];

@@ -17,6 +17,7 @@ class App extends Component {
     ],
     username: 'myUser1',
     showPersons: false,
+    showCockpit: true,
     inputText: ''
   };
 
@@ -80,11 +81,15 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <Cockpit
-          title={this.props.appTitle}
-          show={this.state.showPersons}
-          persons={this.state.persons}
-          clicked={this.togglePersonsHandler} />
+        <button onClick={() => this.setState({ showCockpit: !this.state.showCockpit })}>Remove Cockpit</button>
+        { this.state.showCockpit ?
+          <Cockpit
+            title={this.props.appTitle}
+            show={this.state.showPersons}
+            persons={this.state.persons}
+            clicked={this.togglePersonsHandler} />
+          : null
+        }
         {persons}
       </div>
     );
