@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 
 import "./Blog.css";
 import Posts from "./Posts/Posts";
@@ -45,6 +45,7 @@ class Blog extends Component {
 					{/* Switch makes sure that only the first Route element with matching path is rendered */}
 					<Route path="/new-post" exact component={NewPost} />
 					<Route path="/posts" component={Posts} />
+					<Redirect from="/" to="/posts" />
 				</Switch>
 			</div>
 		);

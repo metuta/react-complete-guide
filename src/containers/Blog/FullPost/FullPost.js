@@ -60,7 +60,8 @@ class FullPost extends Component {
 					});
 				})
 				.catch((error) => {
-					this.setState({ error: true, loading: false });
+					// this.setState({ error: true, loading: false });
+					console.log("[FullPost.js] catch() Error occured!");
 				});
 		}
 	};
