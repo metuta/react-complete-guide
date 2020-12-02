@@ -26,7 +26,10 @@ class NewPost extends Component {
 		this.setState({ redirectId: null });
 		axios.post("/posts", post).then((response) => {
 			console.log("[NewPost.js] postDataHandler response:", response);
-			this.setState({ submitted: true });
+			this.props.history.push("/posts");	// add a new history element, so we can go back
+			// this.props.history.replace("/posts");	// replace current history elemen, we can NOT go back
+			
+			// this.setState({ submitted: true });
 		});
 	};
 
