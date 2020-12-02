@@ -28,8 +28,24 @@ class FullPost extends Component {
 
 	componentDidMount() {
 		console.log("[FullPost.js] componentDidMount", this.props);
-		if (!!this.props.match.params && !!this.props.match.params.id) {
-			this.setState({ loading: true, error: false });
+		this.loadData();
+	}
+
+	componentDidUpdate() {
+		console.log("[FullPost.js] componentDidUpdate");
+		this.loadData();
+	}
+
+	loadData = () => {
+		console.log('[FullPost.js] loadData()');
+		if (
+			!!this.props.match.params &&
+			!!this.props.match.params.id &&
+			(!this.state.loadedPost ||
+				(!!this.state.loadedPost &&
+					this.state.loadedPost.id !== +this.props.match.params.id))
+		) {
+			// this.setState({ loading: true, error: false });
 			axios
 				.get(`/posts/${this.props.match.params.id}`)
 				.then((response) => {
@@ -39,19 +55,19 @@ class FullPost extends Component {
 					);
 					this.setState({
 						loadedPost: response.data,
-						loading: false,
-						error: false,
+						// loading: false,
+						// error: false,
 					});
 				})
 				.catch((error) => {
 					this.setState({ error: true, loading: false });
 				});
 		}
-	}
+	};
 
-	deletePost = (id) => {
-		console.log("[FullPost.js] deletePost", id);
-		axios.delete("/posts/" + id).then((response) => {
+	deletePost = () => {
+		console.log("[FullPost.js] deletePost", this.props.match.params.id);
+		axios.delete("/posts/" + this.props.match.params.id).then((response) => {
 			console.log("[FullPost.js] deletePost response", response);
 		});
 	};
