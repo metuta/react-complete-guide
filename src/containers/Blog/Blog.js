@@ -4,7 +4,6 @@ import { Route, NavLink, Switch } from "react-router-dom";
 import "./Blog.css";
 import Posts from "./Posts/Posts";
 import NewPost from "./NewPost/NewPost";
-import FullPost from "./FullPost/FullPost";
 
 class Blog extends Component {
 	render() {
@@ -15,15 +14,14 @@ class Blog extends Component {
 						<ul>
 							<li>
 								<NavLink
-									to="/"
-									exact
+									to="/posts"
 									activeClassName="my-active"
 									activeStyle={{
 										color: "#fa923f",
 										textDecoration: "underline",
 									}}
 								>
-									Home
+									Posts
 								</NavLink>
 							</li>
 							<li>
@@ -45,9 +43,8 @@ class Blog extends Component {
 				<Route path="/new-post" exact render={() => <h1>New Post</h1>} /> */}
 				<Switch>
 					{/* Switch makes sure that only the first Route element with matching path is rendered */}
-					<Route path="/" exact component={Posts} />
 					<Route path="/new-post" exact component={NewPost} />
-					<Route path="/:id" exact component={FullPost} />
+					<Route path="/posts" component={Posts} />
 				</Switch>
 			</div>
 		);
