@@ -6,6 +6,8 @@ import "./FullPost.css";
 class FullPost extends Component {
 	state = {
 		loadedPost: null,
+		loading: null,
+		error: false,
 	};
 
 	shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -24,46 +26,44 @@ class FullPost extends Component {
 		return true;
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		console.log(
-			"[FullPost.js] componentDidUpdate",
-			prevProps,
-			this.props,
-			prevState,
-			this.state,
-			snapshot
-		);
-		if (
-			this.props.id &&
-			(!this.state.loadedPost ||
-				(!!this.state.loadedPost &&
-					!!this.state.loadedPost.id &&
-					this.state.loadedPost.id !== this.props.id))
-		) {
+	componentDidMount() {
+		console.log("[FullPost.js] componentDidMount", this.props);
+		if (!!this.props.match.params && !!this.props.match.params.id) {
+			this.setState({ loading: true, error: false });
 			axios
-				.get(`/posts/${this.props.id}`)
+				.get(`/posts/${this.props.match.params.id}`)
 				.then((response) => {
-					console.log("GET ID:" + this.props.id + ", Pos:", response.data);
-					this.setState({ loadedPost: response.data });
+					console.log(
+						"[FullPost.js] GET ID:" + this.props.match.params.id + ", Pos:",
+						response.data
+					);
+					this.setState({
+						loadedPost: response.data,
+						loading: false,
+						error: false,
+					});
+				})
+				.catch((error) => {
+					this.setState({ error: true, loading: false });
 				});
 		}
 	}
 
 	deletePost = (id) => {
 		console.log("[FullPost.js] deletePost", id);
-		axios
-			.delete("/posts/" + id)
-			.then((response) => {
-				console.log("response", response);
-			});
+		axios.delete("/posts/" + id).then((response) => {
+			console.log("[FullPost.js] deletePost response", response);
+		});
 	};
 
 	render() {
-		let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;
-		if (this.props.id) {
+		let post = null;
+
+		if (this.state.error) {
+			post = <p style={{ textAlign: "center" }}>Error occured!</p>;
+		} else if (this.state.loading) {
 			post = <p style={{ textAlign: "center" }}>Loading...!</p>;
-		}
-		if (this.state.loadedPost) {
+		} else if (this.state.loadedPost) {
 			post = (
 				<div className="FullPost">
 					<h1>{this.state.loadedPost.title}</h1>

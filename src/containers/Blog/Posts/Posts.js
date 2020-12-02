@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import axios from "../../../axios";
+import { Link } from "react-router-dom";
 
 import Post from "../../../components/Post/Post";
-import  "./Posts.css";
+import "./Posts.css";
 
 class Posts extends Component {
 	state = {
@@ -12,7 +13,7 @@ class Posts extends Component {
 	};
 
 	componentDidMount() {
-    console.log('[Posts.js] props:', this.props);
+		console.log("[Posts.js] props:", this.props);
 		this.setState({ loading: true });
 		axios
 			.get("/posts")
@@ -46,17 +47,18 @@ class Posts extends Component {
 		} else {
 			posts = this.state.posts.map((post) => {
 				return (
-					<Post
-						clicked={(id) => this.postSelectedHandler(id)}
-						active={
-							!!this.state.selectedPostId &&
-							this.state.selectedPostId === post.id
-						}
-						key={post.id}
-						postId={post.id}
-						title={post.title}
-						author={post.author}
-					/>
+					<Link to={"/" + post.id} key={post.id}>
+						<Post
+							clicked={(id) => this.postSelectedHandler(id)}
+							active={
+								!!this.state.selectedPostId &&
+								this.state.selectedPostId === post.id
+							}
+							postId={post.id}
+							title={post.title}
+							author={post.author}
+						/>
+					</Link>
 				);
 			});
 		}
