@@ -6,6 +6,9 @@ import Posts from "./Posts/Posts";
 import NewPost from "./NewPost/NewPost";
 
 class Blog extends Component {
+	state = {
+		auth: false,
+	};
 	render() {
 		return (
 			<div className="Blog">
@@ -43,7 +46,7 @@ class Blog extends Component {
 				<Route path="/new-post" exact render={() => <h1>New Post</h1>} /> */}
 				<Switch>
 					{/* Switch makes sure that only the first Route element with matching path is rendered */}
-					<Route path="/new-post" exact component={NewPost} />
+					{ this.state.auth ? <Route path="/new-post" exact component={NewPost} /> : null }
 					<Route path="/posts" component={Posts} />
 					<Redirect from="/" to="/posts" />
 				</Switch>
