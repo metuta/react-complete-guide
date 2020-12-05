@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "../../../axios";
-import { Route } from "react-router-dom";
+import { withRouter, Route } from "react-router-dom";
 
 import Post from "../../../components/Post/Post";
 import "./Posts.css";
@@ -35,7 +35,7 @@ class Posts extends Component {
 	}
 
 	postSelectedHandler = (id) => {
-		console.log("[Posts.js] postSelectedHandler", id, this.props);
+		console.log("[Posts.js] postSelectedHandler - id:", id, ', this.props:', this.props);
 		this.props.history.push({ pathname: "/posts/" + id });
 	};
 
@@ -76,4 +76,4 @@ class Posts extends Component {
 	}
 }
 
-export default Posts;
+export default withRouter(Posts);
