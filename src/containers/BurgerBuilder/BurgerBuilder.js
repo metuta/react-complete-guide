@@ -156,17 +156,11 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onIngredientAdded: (ingName) => {
 			console.log("onIngredientAdded:", ingName);
-			return dispatch({
-				type: actions.ADD_INGREDIENT,
-				ingredientName: ingName,
-			});
+			return dispatch(actions.addIngredient(ingName));
 		},
 		onIngredientRemoved: (ingName) => {
 			console.log("onIngredientRemoved:", ingName);
-			return dispatch({
-				type: actions.REMOVE_INGREDIENT,
-				ingredientName: ingName,
-			});
+			return dispatch(actions.removeIngredient(ingName));
 		},
 	};
 };
