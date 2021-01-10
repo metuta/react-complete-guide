@@ -30,6 +30,7 @@ class BurgerBuilder extends Component {
 			"[BurgerBuilder.js] componentDidMount - this.props:",
 			this.props
 		);
+		this.props.onIngredientsInited();
 		// if (this.props.location.state) {
 		// 	this.setState((prevState) => {
 		// 		return { ...prevState, ...this.props.location.state };
@@ -86,7 +87,7 @@ class BurgerBuilder extends Component {
 	render() {
 		let orderSummary = null;
 
-		let burger = this.state.error ? (
+		let burger = this.props.error ? (
 			<p style={{ textAlign: "center" }}>Ingredients can't be loaded!</p>
 		) : (
 			<Spinner />
@@ -112,9 +113,10 @@ class BurgerBuilder extends Component {
 				disabledInfo[key] = disabledInfo[key] <= 0;
 			}
 
-			const addedCount = Object.keys(this.props.ings)
-				.map((key) => this.props.ings[key])
-				.reduce((acc, current) => acc + current, 0);
+			const addedCount = Object.values(this.props.ings).reduce(
+				(acc, current) => acc + current,
+				0
+			);
 
 			burger = (
 				<Auxiliary>
@@ -149,17 +151,22 @@ const mapStateToProps = (state) => {
 	return {
 		ings: state.ingredients,
 		price: state.totalPrice,
+		error: state.error,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		onIngredientsInited: () => {
+			console.log("[BurgerBuilder.js] onIngredientsInited");
+			return dispatch(actions.initIngredients());
+		},
 		onIngredientAdded: (ingName) => {
-			console.log("onIngredientAdded:", ingName);
+			console.log("[BurgerBuilder.js] onIngredientAdded:", ingName);
 			return dispatch(actions.addIngredient(ingName));
 		},
 		onIngredientRemoved: (ingName) => {
-			console.log("onIngredientRemoved:", ingName);
+			console.log("[BurgerBuilder.js] onIngredientRemoved:", ingName);
 			return dispatch(actions.removeIngredient(ingName));
 		},
 	};
